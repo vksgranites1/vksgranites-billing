@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
 });
 
 // Get Next Invoice Number
@@ -19,11 +19,8 @@ export const saveInvoice = async (invoice) => {
 // Get All / Search Invoices
 export const getInvoices = async (search = "") => {
   const res = await API.get("/invoices", {
-    params: {
-      search,
-    },
+    params: { search },
   });
-
   return res.data;
 };
 
