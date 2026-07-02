@@ -1,7 +1,9 @@
 import axios from "axios";
 
+console.log("API URL:", import.meta.env.VITE_API_URL);
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:5000/api",
+  baseURL: "http://localhost:5000/api", // Force localhost for now
 });
 
 // Get Next Invoice Number
@@ -35,3 +37,5 @@ export const deleteInvoice = async (id) => {
   const res = await API.delete(`/invoices/${id}`);
   return res.data;
 };
+
+export default API;

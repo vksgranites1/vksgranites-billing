@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const invoiceSchema = new mongoose.Schema(
+const jobWorkSchema = new mongoose.Schema(
   {
     invoiceNo: {
       type: String,
@@ -8,47 +8,34 @@ const invoiceSchema = new mongoose.Schema(
       unique: true,
     },
 
-    invoiceDate: {
-      type: String,
-      required: true,
-    },
+    invoiceDate: String,
 
     customerName: String,
     customerAddress: String,
     customerGSTIN: String,
+
     state: String,
     stateCode: String,
 
     transportMode: String,
     vehicleNumber: String,
+
     dateOfSupply: String,
     placeOfSupply: String,
 
-    product: String,
-    hsnCode: String,
+    consigneeName: String,
+    consigneeAddress: String,
+    consigneeGSTIN: String,
 
     rate: Number,
     cuFeet: Number,
 
     amount: Number,
     cgst: Number,
-
     sgst: Number,
-
-    igstAmount: Number,
-
-    totalGST: Number,
-
-    consigneeName: String,
-
-    consigneeAddress: String,
-
-    consigneeGSTIN: String,
-
     igst: Number,
-    taxAmount: Number,
-
-
+    igstAmount: Number,
+    totalGST: Number,
     grandTotal: Number,
 
     amountWords: String,
@@ -58,4 +45,4 @@ const invoiceSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Invoice", invoiceSchema);
+export default mongoose.model("JobWork", jobWorkSchema);

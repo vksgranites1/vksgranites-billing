@@ -5,15 +5,16 @@ const company = {
 
   name: "VKS GRANITES",
 
-  gstin: "33AAGFV6548Q1ZE",
+  gstin: "33EVHPK7528D1ZL",
 
   address: `3/6, Moolakadu,Masakalipatti PO,
 Rasipuram,Namakkal ,
 Tamil Nadu - 637401`,
 
   phone: "9894865335",
+  phone2: "9994851630",
 
-  email: "vtsgranites@gmail.com",
+  email: "vtsgranites1@gmail.com",
 
   product: "Sawn Rectangular Building Stones",
 
@@ -22,7 +23,7 @@ Tamil Nadu - 637401`,
   bank: {
     name: "Tamilnad Mercantile Bank",
     branch: "Rasipuram",
-    account: "199153010875072",
+    account: "1991539994851630",
     ifsc: "TMBL0000199",
   },
 };

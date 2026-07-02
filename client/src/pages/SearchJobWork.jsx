@@ -1,29 +1,31 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getInvoices, deleteInvoice } from "../api/invoiceApi";
-import { getInvoice } from "../api/invoiceApi";
+import {
+  getJobWorks,
+  deleteJobWork,
+} from "../api/jobWorkApi";
 
-function SearchInvoice() {
+function SearchJobWork() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-  const [invoices, setInvoices] = useState([]);
+  const [jobWorks, setJobWorks] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    loadInvoices();
+    loadJobWorks();
   }, []);
 
-  const loadInvoices = async (searchText = "") => {
+  const loadJobWorks = async (searchText = "") => {
     try {
       setLoading(true);
 
-      const data = await getInvoices(searchText);
+      const data = await getJobWorks(searchText);
 
-      setInvoices(data);
+      setJobWorks(data);
     } catch (error) {
       console.error(error);
-      alert("Unable to load invoices");
+      alert("Unable to load Job Work Bills");
     } finally {
       setLoading(false);
     }
@@ -34,33 +36,32 @@ function SearchInvoice() {
 
     setSearch(value);
 
-    loadInvoices(value);
+    loadJobWorks(value);
   };
 
   const handleDelete = async (id) => {
-  const confirmDelete = window.confirm(
-    "Delete this invoice?"
-  );
+    const confirmDelete = window.confirm(
+      "Delete this Job Work Bill?"
+    );
 
-  if (!confirmDelete) return;
+    if (!confirmDelete) return;
 
-  try {
-    const res = await deleteInvoice(id);
+    try {
+      const res = await deleteJobWork(id);
 
-    alert(res.message);
+      alert(res.message);
 
-    loadInvoices(search);
+      loadJobWorks(search);
+    } catch (error) {
+      console.error(error);
 
-  } catch (error) {
-    console.error(error);
-
-    if (error.response) {
-      alert(error.response.data.message);
-    } else {
-      alert("Unable to delete invoice.");
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Unable to delete Job Work Bill.");
+      }
     }
-  }
-};
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-6">
@@ -70,21 +71,21 @@ function SearchInvoice() {
         <div className="flex justify-between items-center mb-6">
 
           <h1 className="text-3xl font-bold">
-            Search Invoice
+            Search Job Work Bills
           </h1>
 
           <button
-            onClick={() => navigate("/billing")}
+            onClick={() => navigate("/jobwork")}
             className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg"
           >
-            + New Invoice
+            + New Job Work Bill
           </button>
 
         </div>
 
         <input
           type="text"
-          placeholder="Search by Invoice No, Customer Name or Date"
+          placeholder="Search by Bill No, Customer Name or Date"
           value={search}
           onChange={handleSearch}
           className="w-full border rounded-lg p-3 mb-6"
@@ -99,7 +100,7 @@ function SearchInvoice() {
 
               <tr>
 
-                <th className="border p-2">Invoice No</th>
+                <th className="border p-2">Bill No</th>
 
                 <th className="border p-2">Date</th>
 
@@ -115,7 +116,7 @@ function SearchInvoice() {
 
             <tbody>
 
-              {invoices.length === 0 ? (
+              {jobWorks.length === 0 ? (
 
                 <tr>
 
@@ -123,31 +124,31 @@ function SearchInvoice() {
                     colSpan="5"
                     className="text-center p-6"
                   >
-                    No Invoice Found
+                    No Job Work Bills Found
                   </td>
 
                 </tr>
 
               ) : (
 
-                invoices.map((invoice) => (
+                jobWorks.map((bill) => (
 
-                  <tr key={invoice._id}>
+                  <tr key={bill._id}>
 
                     <td className="border p-2 text-center">
-                      {invoice.invoiceNo}
+                      {bill.invoiceNo}
                     </td>
 
                     <td className="border p-2 text-center">
-                      {invoice.invoiceDate}
+                      {bill.invoiceDate}
                     </td>
 
                     <td className="border p-2">
-                      {invoice.customerName}
+                      {bill.customerName}
                     </td>
 
                     <td className="border p-2 text-right">
-                      ₹ {Number(invoice.grandTotal).toFixed(2)}
+                      ₹ {Number(bill.grandTotal).toFixed(2)}
                     </td>
 
                     <td className="border p-2">
@@ -155,16 +156,14 @@ function SearchInvoice() {
                       <div className="flex justify-center gap-2">
 
                         <button
-                            onClick={() => navigate(`/invoice/${invoice._id}`)}
+                            onClick={() => navigate(`/jobwork/${bill._id}`)}
                             className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
                             >
                             View
                             </button>
 
-                        
-
                         <button
-                          onClick={() => handleDelete(invoice._id)}
+                          onClick={() => handleDelete(bill._id)}
                           className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
                         >
                           Delete
@@ -186,13 +185,18 @@ function SearchInvoice() {
         )}
 
       </div>
-      <button onClick={() => navigate("/billing")}
-        className="bg-red-700 text-white px-8 py-3 rounded-lg ml-150 mt-50">
-         Back to Billing
+
+      <div className="flex justify-center mt-8">
+        <button
+          onClick={() => navigate("/jobwork")}
+          className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-3 rounded-lg"
+        >
+          Back to Billing
         </button>
+      </div>
 
     </div>
   );
 }
 
-export default SearchInvoice;
+export default SearchJobWork;

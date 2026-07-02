@@ -2,7 +2,7 @@ import { useState } from "react";
 import company from "../data/company";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { getNextInvoiceNumber } from "../api/invoiceApi";
+import { getNextJobWorkNumber } from "../api/jobWorkApi";
 
 function Billing() {
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ useEffect(() => {
 }, []);
 
   const loadInvoice = async () => {
-      const no = await getNextInvoiceNumber();
+      const no = await getNextJobWorkNumber();
 
       setFormData((prev) => ({
           ...prev,
@@ -74,14 +74,14 @@ useEffect(() => {
   return (
     <div className="min-h-screen bg-gray-100 p-6">
 
-      <div className="max-w-5xl mx-auto bg-blue-200 rounded-xl shadow-lg p-8">
+      <div className="max-w-5xl mx-auto bg-red-200 rounded-xl shadow-lg p-8">
 
         <h1 className="text-3xl font-bold text-center">
           {company.name}
         </h1>
 
         <p className="text-center text-gray-500">
-          GST TAX INVOICE
+          JOB WORK INVOICE
         </p>
 
         <hr className="my-6"/>
@@ -352,19 +352,27 @@ useEffect(() => {
     JSON.stringify(invoiceData)
   );
 
-  navigate("/preview", {
-    state: invoiceData,
-  });
+  navigate("/jobwork-preview", {
+  state: {
+    formData,
+    amount,
+    cgst,
+    sgst,
+    igstAmount,
+    totalGST,
+    grandTotal,
+  },
+});
 }}
           className="bg-blue-600 text-white px-8 py-3 rounded-lg"
         >
-          Preview Invoice
+          Print  Bill
         </button>
-        <button onClick={() => navigate("/search")}
+        <button onClick={() => navigate("/search-jobwork")}
         className="bg-gray-700 text-white px-8 py-3 rounded-lg ml-3">
-         Search Invoice
+         Search Jobwork Bill
         </button>
-        <button onClick={() => navigate("/Dashboard")}
+        <button onClick={() => navigate("/dashboard")}
         className="bg-red-700 text-white px-8 py-3 rounded-lg ml-3">
          Dashboard
         </button>

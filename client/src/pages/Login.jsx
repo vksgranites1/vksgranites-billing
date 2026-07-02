@@ -25,7 +25,7 @@ function Login() {
 
       alert("Login Successful");
 
-      navigate("/billing");
+      navigate("/Dashboard");
     } catch (err) {
       alert(
         err.response?.data?.message || "Login Failed"

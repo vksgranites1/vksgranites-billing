@@ -8,7 +8,7 @@ const formatDate = (date) => {
 
   return `${day}-${month}-${year}`;
 };
-const InvoicePreview = forwardRef(({ data }, ref) => {
+const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
   return (
     <div
       ref={ref}
@@ -29,7 +29,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
     </div>
 
     <div className="font-bold text-blue-900 text-xl">
-      TAX INVOICE
+      JOB WORK BILL
     </div>
 
     <div className="text-right">
@@ -55,7 +55,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
     <div className="flex-1 text-center">
 
-      <h1 className="text-5xl font-bold text-blue-900 tracking-wide"style={{ fontFamily: "Times New Roman, Times, serif" }}>
+      <h1 className="text-5xl font-bold text-blue-900 tracking-wide "style={{ fontFamily: "Times New Roman, Times, serif" }} >
 
         V.K.S GRANITES
 
@@ -604,6 +604,6 @@ Authorised Signatory
   );
 });
 
-InvoicePreview.displayName = "InvoicePreview";
+JobWorkInvoicePreview.displayName = "JobWorkInvoicePreview";
 
-export default InvoicePreview;
+export default JobWorkInvoicePreview;

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import InvoicePreview from "../components/InvoicePreview";
 import { getInvoice } from "../api/invoiceApi";
 
 function ViewInvoice() {
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [invoice, setInvoice] = useState(null);
 
@@ -44,6 +45,13 @@ function ViewInvoice() {
           className="bg-blue-600 text-white px-6 py-3 rounded"
         >
           Print Invoice
+        </button>
+&nbsp;&nbsp;
+        <button
+          onClick={() => navigate("/search-jobwork")}
+          className="bg-red-600 text-white px-7 py-3 rounded"
+        >
+          Back to Search
         </button>
 
       </div>
