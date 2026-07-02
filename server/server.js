@@ -16,14 +16,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: "https://vksgranites-billing-1.onrender.com",
     credentials: true,
   })
 );
-
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
