@@ -48,7 +48,7 @@ function Login() {
         </div>
 
         <h1 className="text-3xl font-bold text-center mt-4">
-          VTS Granites
+          VKS Granites
         </h1>
 
         <p className="text-center text-gray-500 mb-8">
