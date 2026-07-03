@@ -186,10 +186,17 @@ function SearchInvoice() {
         )}
 
       </div>
+      <div className="flex justify-center mt-8"></div>
       <button onClick={() => navigate("/billing")}
-        className="bg-red-700 text-white px-8 py-3 rounded-lg ml-150 mt-50">
+        className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-3 rounded-lg">
          Back to Billing
         </button>
+        
+
+
+
+
+
 
     </div>
   );

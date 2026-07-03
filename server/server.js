@@ -13,10 +13,18 @@ dotenv.config();
 connectDB();
 
 const app = express();
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://vksgranites-billing-1.onrender.com",
+];
 
 app.use(
   cors({
-    origin: "https://vksgranites-billing-1.onrender.com",
+    origin: [
+      "http://localhost:5173",
+      "https://vksgranites-billing-1.onrender.com",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
   })
 );
