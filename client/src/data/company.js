@@ -23,7 +23,7 @@ Tamil Nadu - 637401`,
   bank: {
     name: "Tamilnad Mercantile Bank",
     branch: "Rasipuram",
-    account: "1991539994851630",
+    account: "199539994851630",
     ifsc: "TMBL0000199",
   },
 };

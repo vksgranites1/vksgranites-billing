@@ -38,11 +38,14 @@ const state =
 
         amount: state.amount,
 
-        cgst: state.cgst,
+        cgst: Number(state.formData.cgst),
 
-        sgst: state.sgst,
+        sgst: Number(state.formData.sgst),
 
-        igstAmount: state.igstAmount,
+        cgstAmount: Number(state.cgstAmount),
+        sgstAmount: Number(state.sgstAmount),
+
+        igstAmount: Number(state.igstAmount),
 
         totalGST: state.totalGST,
 
@@ -65,25 +68,26 @@ const state =
   return (
     <div className="bg-gray-100 min-h-screen p-6">
       <InvoicePreview
-        ref={printRef}
-        data={{
-          ...state.formData,
+  ref={printRef}
+  data={{
+    ...state.formData,
 
-          amount: state.amount,
+    amount: state.amount,
 
-          cgst: state.cgst,
+    cgst: state.formData.cgst,
+    sgst: state.formData.sgst,
+    igst: state.formData.igst,
 
-          sgst: state.sgst,
+    cgstAmount: state.cgstAmount,
+    sgstAmount: state.sgstAmount,
+    igstAmount: state.igstAmount,
 
-          igstAmount: state.igstAmount,
+    totalGST: state.totalGST,
+    grandTotal: state.grandTotal,
 
-          totalGST: state.totalGST,
-
-          grandTotal: state.grandTotal,
-
-          amountWords: amountToWords(state.grandTotal),
-        }}
-      />
+    amountWords: amountToWords(state.grandTotal),
+  }}
+/>
 
       <div className="flex justify-center gap-5 mt-8 print:hidden">
         <button

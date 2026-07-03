@@ -13,6 +13,8 @@ const invoiceSchema = new mongoose.Schema(
       required: true,
     },
 
+    reverseCharge: String,
+
     customerName: String,
     customerAddress: String,
     customerGSTIN: String,
@@ -31,26 +33,25 @@ const invoiceSchema = new mongoose.Schema(
     cuFeet: Number,
 
     amount: Number,
+
     cgst: Number,
-
     sgst: Number,
+    igst: Number,
 
+    cgstAmount: Number,
+    sgstAmount: Number,
     igstAmount: Number,
 
     totalGST: Number,
-
-    consigneeName: String,
-
-    consigneeAddress: String,
-
-    consigneeGSTIN: String,
-
-    igst: Number,
     taxAmount: Number,
 
+    consigneeName: String,
+    consigneeAddress: String,
+    consigneeGSTIN: String,
+    consigneeState: String,
+    consigneeStateCode: String,
 
     grandTotal: Number,
-
     amountWords: String,
   },
   {

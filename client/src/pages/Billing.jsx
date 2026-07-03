@@ -7,32 +7,36 @@ import { getNextInvoiceNumber } from "../api/invoiceApi";
 function Billing() {
   const navigate = useNavigate();
   const today = new Date().toISOString().split("T")[0];
-
+  
   const [formData, setFormData] = useState({
-    invoiceNo: "01",
-    invoiceDate: today,
+        invoiceNo: "01",
+        invoiceDate: today,
 
-    customerName: "",
-    customerAddress: "",
-    customerGSTIN: "",
-    state: "",
-    stateCode: "",
+        reverseCharge: "",
 
-    transportMode: "",
-    vehicleNumber: "",
-    dateOfSupply: today,
-    placeOfSupply: "",
+        customerName: "",
+        customerAddress: "",
+        customerGSTIN: "",
+        state: "",
+        stateCode: "",
 
-    consigneeName: "",
-    consigneeAddress: "",
-    consigneeGSTIN: "",
+        transportMode: "",
+        vehicleNumber: "",
+        dateOfSupply: today,
+        placeOfSupply: "",
 
-    rate: "",
-    cuFeet: "",
-    cgst: "",
-    sgst: "",
-    igst: "",
-  });
+        consigneeName: "",
+        consigneeAddress: "",
+        consigneeGSTIN: "",
+        consigneeState: "",
+        consigneeStateCode: "",
+
+        rate: "",
+        cuFeet: "",
+        cgst: "",
+        sgst: "",
+        igst: "",
+      });
 
   const handleChange = (e) => {
     setFormData({
@@ -42,24 +46,27 @@ function Billing() {
   };
 
   const amount =
-  Number(formData.rate || 0) *
-  Number(formData.cuFeet || 0);
+      Number(formData.rate || 0) *
+      Number(formData.cuFeet || 0);
 
-const cgst =
-  amount * Number(formData.cgst || 0) / 100;
+    const cgstAmount =
+      (amount * Number(formData.cgst || 0)) / 100;
 
-const sgst =
-  amount * Number(formData.sgst || 0) / 100;
+    const sgstAmount =
+      (amount * Number(formData.sgst || 0)) / 100;
 
-const igstAmount =
-  amount * Number(formData.igst || 0) / 100;
+    const igstAmount =
+      (amount * Number(formData.igst || 0)) / 100;
 
-const totalGST = cgst + sgst + igstAmount;
+    const totalGST =
+      cgstAmount + sgstAmount + igstAmount;
 
-const grandTotal = amount + totalGST;
-useEffect(() => {
-  loadInvoice();
-}, []);
+    const grandTotal =
+      amount + totalGST;
+
+      useEffect(() => {
+        loadInvoice();
+      }, []);
 
   const loadInvoice = async () => {
       const no = await getNextInvoiceNumber();
@@ -105,6 +112,32 @@ useEffect(() => {
           </div>
 
           <div>
+  <label className="block mb-2">Reverse Charge</label>
+
+  <label className="mr-4">
+    <input
+      type="radio"
+      name="reverseCharge"
+      value="Yes"
+      checked={formData.reverseCharge === "Yes"}
+      onChange={handleChange}
+    />{" "}
+    Yes
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      name="reverseCharge"
+      value="No"
+      checked={formData.reverseCharge === "No"}
+      onChange={handleChange}
+    />{" "}
+    No
+  </label>
+</div>
+
+          <div>
             <label>Invoice Date</label>
 
             <input
@@ -141,6 +174,7 @@ useEffect(() => {
           onChange={handleChange}
           className="w-full border rounded p-3 mb-3"
         />
+        
 
         <div className="grid md:grid-cols-3 gap-4">
 
@@ -235,14 +269,31 @@ useEffect(() => {
           onChange={handleChange}
           className="w-full border rounded p-3 mb-3"
         />
-
+        <div className="grid md:grid-cols-3 gap-4">
         <input
           name="consigneeGSTIN"
           placeholder="Consignee GSTIN"
           value={formData.consigneeGSTIN}
           onChange={handleChange}
-          className="w-full border rounded p-3"
+          className="border rounded p-3"
         />
+
+        <input
+            name="consigneeState"
+            placeholder="State"
+            value={formData.consigneeState}
+            onChange={handleChange}
+            className="border rounded p-3"
+          />
+
+          <input
+            name="consigneeStateCode"
+            placeholder="State Code"
+            value={formData.consigneeStateCode}
+            onChange={handleChange}
+            className="border rounded p-3"
+          />
+          </div>
         <hr className="my-6" />
         {/* Product */}
 
@@ -313,11 +364,11 @@ useEffect(() => {
           <p>Amount : ₹ {amount.toFixed(2)}</p>
 
           <p>
-  CGST ({formData.cgst || 0}%): ₹ {cgst.toFixed(2)}
+  CGST ({formData.cgst || 0}%): ₹ {cgstAmount.toFixed(2)}
 </p>
 
 <p>
-  SGST ({formData.sgst || 0}%): ₹ {sgst.toFixed(2)}
+  SGST ({formData.sgst || 0}%): ₹ {sgstAmount.toFixed(2)}
 </p>
 
 <p>
@@ -337,37 +388,37 @@ useEffect(() => {
 
           <button
           onClick={() => {
-  const invoiceData = {
-    formData,
-    amount,
-    cgst,
-    sgst,
-    igstAmount,
-    totalGST,
-    grandTotal,
-  };
+          const invoiceData = {
+          formData,
+          amount,
+          cgstAmount,
+          sgstAmount,
+          igstAmount,
+          totalGST,
+          grandTotal,
+        };
 
-  sessionStorage.setItem(
-    "invoiceData",
-    JSON.stringify(invoiceData)
-  );
+        sessionStorage.setItem(
+          "invoiceData",
+          JSON.stringify(invoiceData)
+        );
 
-  navigate("/preview", {
-    state: invoiceData,
-  });
+        navigate("/preview", {
+          state: invoiceData,
+        });
 }}
           className="bg-blue-600 text-white px-8 py-3 rounded-lg"
         >
           Preview Invoice
-        </button>
+        </button><br/><br/>
         <button onClick={() => navigate("/search")}
-        className="bg-gray-700 text-white px-8 py-3 rounded-lg ml-3">
+        className="bg-gray-700 text-white px-8 py-3 rounded-lg ml-3 ">
          Search Invoice
-        </button>
+        </button> &nbsp;&nbsp;<br/><br/>
         <button onClick={() => navigate("/Dashboard")}
-        className="bg-red-700 text-white px-8 py-3 rounded-lg ml-3">
+        className="bg-red-700 text-white px-9 py-3 rounded-lg ml-3">
          Dashboard
-        </button>
+        </button>&nbsp;&nbsp;
 
         </div>
 

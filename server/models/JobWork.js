@@ -10,6 +10,8 @@ const jobWorkSchema = new mongoose.Schema(
 
     invoiceDate: String,
 
+    reverseCharge: String,
+
     customerName: String,
     customerAddress: String,
     customerGSTIN: String,
@@ -26,6 +28,11 @@ const jobWorkSchema = new mongoose.Schema(
     consigneeName: String,
     consigneeAddress: String,
     consigneeGSTIN: String,
+    consigneeState: String,
+    consigneeStateCode: String,
+
+    product: String,
+    hsnCode: String,
 
     rate: Number,
     cuFeet: Number,
@@ -34,6 +41,8 @@ const jobWorkSchema = new mongoose.Schema(
     cgst: Number,
     sgst: Number,
     igst: Number,
+    cgstAmount: Number,
+    sgstAmount: Number,
     igstAmount: Number,
     totalGST: Number,
     grandTotal: Number,

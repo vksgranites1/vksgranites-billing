@@ -12,11 +12,23 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
   return (
     <div
       ref={ref}
-      className="bg-white border border-black p-6 text-sm w-[210mm] min-h-[297mm] mx-auto"
+      className="bg-white border border-black p-6 text-sm mx-auto"
+      style={{
+        WebkitPrintColorAdjust: "exact",
+        printColorAdjust: "exact",
+        boxSizing: "border-box",
+        width: "210mm",
+        minHeight: "297mm",
+      }}
     >
       {/* Header */}
       {/* ================= HEADER ================= */}
       
+    
+
+
+
+    
 
 <div className="border-2 border-blue-900">
 
@@ -103,7 +115,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
           <td className="p-2 font-semibold w-40">
             Reverse Charge (Y/N)
           </td>
-          <td className="p-2">No</td>
+          <td className="p-2">{data.reverseCharge}</td>
         </tr>
 
         <tr className="border-b">
@@ -132,7 +144,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
           </td>
 
           <td className="p-2">
-            {data.customerName}
+            {data.customerName || "-"}
           </td>
 
         </tr>
@@ -144,7 +156,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
           </td>
 
           <td className="p-2 whitespace-pre-line">
-            {data.customerAddress}
+            {data.customerAddress || "-"}
           </td>
 
         </tr>
@@ -162,28 +174,23 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </tr>
 
         <tr className="border-b">
-
           <td className="p-2 font-semibold">
-            State   :
+            State :
           </td>
 
-          <td className="p-2 flex justify-between">
-
-            <span>{data.state}</span>
+          <td className="p-2">
+            {data.state || "-"}
           </td>
-
         </tr>
+
         <tr className="border-b">
-
           <td className="p-2 font-semibold">
-            Code   :
+            State Code :
           </td>
 
-          <td className="p-2 flex justify-between">
-
-            <span>{data.stateCode}</span>
+          <td className="p-2">
+            {data.stateCode || "-"}
           </td>
-
         </tr>
 
       </tbody>
@@ -247,7 +254,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </td>
 
         <td className="p-2">
-          {data.placeOfSupply}
+          {data.placeOfSupply || "-"}
         </td>
 
       </tr>
@@ -259,7 +266,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </td>
 
         <td className="p-2">
-          {data.consigneeName}
+          {data.consigneeName || "-"}
         </td>
 
       </tr>
@@ -271,7 +278,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </td>
 
         <td className="p-2 whitespace-pre-line">
-          {data.consigneeAddress}
+          {data.consigneeAddress || "-"}
         </td>
 
       </tr>
@@ -295,9 +302,9 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </td>
 
         <td className="p-2 flex justify-between">
-          {data.state}
+          {data.consigneeState || "-"}
           <span className="float-right">
-            <span className="font-bold">Code :</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{data.stateCode}
+            <span className="font-bold">Code :</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{data.consigneeStateCode || "-"}
           </span>
         </td>
 
@@ -509,7 +516,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </td>
 
         <td className="border px-2 py-1 text-right">
-          ₹ {Number(data.cgst).toFixed(2)}
+          ₹ {Number(data.cgstAmount).toFixed(2)}
         </td>
       </tr>
 
@@ -519,7 +526,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         </td>
 
         <td className="border px-2 py-1 text-right">
-          ₹ {Number(data.sgst).toFixed(2)}
+          ₹ {Number(data.sgstAmount).toFixed(2)}
         </td>
       </tr>
 
@@ -575,15 +582,14 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
           VKS GRANITES
         </span>
       </p>
-      <img
-    src={signature}
-    alt="Signature"
-    className="h-14 mx-auto my-1"
-/>
-
-<p className="font-semibold mt-0">
-Authorised Signatory
-</p>
+      <div className="mt-4">
+        <div className="flex justify-center">
+          <div className="text-right" style={{ width: "40%" }}>
+            <div className="border-t border-black mx-auto" style={{ height: 60, width: "0%" }} />
+            <p className="font-semibold mt-1">Authorised Signatory</p>
+          </div>
+        </div>
+      </div>
 
     </div>
 

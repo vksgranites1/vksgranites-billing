@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getInvoices, deleteInvoice } from "../api/invoiceApi";
-import { getInvoice } from "../api/invoiceApi";
+
+const formatDate = (date) => {
+  if (!date) return "";
+  const [year, month, day] = date.split("-");
+  return `${day}-${month}-${year}`;
+};
 
 function SearchInvoice() {
   const navigate = useNavigate();
@@ -91,107 +96,90 @@ function SearchInvoice() {
         />
 
         {loading ? (
-          <p className="text-center">Loading...</p>
+          <div className="text-center py-12 text-gray-600">Loading invoices...</div>
         ) : (
-          <table className="w-full border-collapse border">
-
-            <thead className="bg-gray-200">
-
-              <tr>
-
-                <th className="border p-2">Invoice No</th>
-
-                <th className="border p-2">Date</th>
-
-                <th className="border p-2">Customer</th>
-
-                <th className="border p-2">Grand Total</th>
-
-                <th className="border p-2">Actions</th>
-
-              </tr>
-
-            </thead>
-
-            <tbody>
-
-              {invoices.length === 0 ? (
-
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200 border border-gray-200 shadow-sm">
+              <thead className="bg-gray-50">
                 <tr>
-
-                  <td
-                    colSpan="5"
-                    className="text-center p-6"
-                  >
-                    No Invoice Found
-                  </td>
-
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                    Invoice No
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                    Date
+                  </th>
+                  <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-600">
+                    Customer
+                  </th>
+                  <th className="px-4 py-3 text-right text-xs font-semibold uppercase tracking-wider text-gray-600">
+                    Grand Total
+                  </th>
+                  <th className="px-4 py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-600">
+                    Actions
+                  </th>
                 </tr>
-
-              ) : (
-
-                invoices.map((invoice) => (
-
-                  <tr key={invoice._id}>
-
-                    <td className="border p-2 text-center">
-                      {invoice.invoiceNo}
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {invoices.length === 0 ? (
+                  <tr>
+                    <td colSpan="5" className="px-6 py-8 text-center text-gray-500">
+                      No invoices found
                     </td>
-
-                    <td className="border p-2 text-center">
-                      {invoice.invoiceDate}
-                    </td>
-
-                    <td className="border p-2">
-                      {invoice.customerName}
-                    </td>
-
-                    <td className="border p-2 text-right">
-                      ₹ {Number(invoice.grandTotal).toFixed(2)}
-                    </td>
-
-                    <td className="border p-2">
-
-                      <div className="flex justify-center gap-2">
-
-                        <button
-                            onClick={() => navigate(`/invoice/${invoice._id}`)}
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded"
-                            >
-                            View
-                            </button>
-
-                        
-
-                        <button
-                          onClick={() => handleDelete(invoice._id)}
-                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                        >
-                          Delete
-                        </button>
-
-                      </div>
-
-                    </td>
-
                   </tr>
-
-                ))
-
-              )}
-
-            </tbody>
-
-          </table>
+                ) : (
+                  invoices.map((invoice) => (
+                    <tr key={invoice._id} className="hover:bg-gray-50">
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {invoice.invoiceNo}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-700">
+                        {formatDate(invoice.invoiceDate)}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-700">
+                        {invoice.customerName}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-sm font-semibold text-gray-800 text-right">
+                        ₹ {Number(invoice.grandTotal).toFixed(2)}
+                      </td>
+                      <td className="px-4 py-4 whitespace-nowrap text-center">
+                        <div className="inline-flex items-center gap-2">
+                          <button
+                            onClick={() => navigate(`/invoice/${invoice._id}`)}
+                            className="rounded-md bg-green-600 px-3 py-1 text-sm font-medium text-white hover:bg-green-700"
+                          >
+                            View
+                          </button>
+                          <button
+                            onClick={() => handleDelete(invoice._id)}
+                            className="rounded-md bg-red-600 px-3 py-1 text-sm font-medium text-white hover:bg-red-700"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
 
       </div>
-      <div className="flex justify-center mt-8"></div>
-      <button onClick={() => navigate("/billing")}
-        className="bg-gray-700 hover:bg-gray-800 text-white px-8 py-3 rounded-lg">
-         Back to Billing
+      <div className="flex flex-col gap-3 items-center justify-center mt-8 md:flex-row">
+        <button
+          onClick={() => navigate("/billing")}
+          className="w-full max-w-xs rounded-lg bg-gray-700 px-6 py-3 text-sm font-medium text-white transition hover:bg-gray-800 md:w-auto"
+        >
+          Back to Billing
         </button>
-        
+        <button
+          onClick={() => navigate("/dashboard")}
+          className="w-full max-w-xs rounded-lg bg-red-700 px-6 py-3 text-sm font-medium text-white transition hover:bg-red-800 md:w-auto"
+        >
+          Dashboard
+        </button>
+      </div>
 
 
 

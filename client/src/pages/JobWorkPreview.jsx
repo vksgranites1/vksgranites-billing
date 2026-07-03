@@ -32,19 +32,28 @@ const state =
     documentTitle: `JobWork-${state.formData.invoiceNo}`,
   });
 
+  const previewData = {
+    ...state.formData,
+
+    amount: Number(state.amount),
+
+    cgst: Number(state.formData.cgst),
+    sgst: Number(state.formData.sgst),
+    igst: Number(state.formData.igst),
+
+    cgstAmount: Number(state.cgstAmount),
+    sgstAmount: Number(state.sgstAmount),
+    igstAmount: Number(state.igstAmount),
+
+    totalGST: Number(state.totalGST),
+    grandTotal: Number(state.grandTotal),
+
+    amountWords: amountToWords(state.grandTotal),
+  };
+
   const handleSaveAndPrint = async () => {
     try {
-      await saveJobWork({
-  ...state.formData,
-  amount: state.amount,
-  cgst: state.cgst,
-  sgst: state.sgst,
-  igst: state.formData.igst,
-  igstAmount: state.igstAmount,
-  totalGST: state.totalGST,
-  grandTotal: state.grandTotal,
-  amountWords: amountToWords(state.grandTotal),
-});
+      await saveJobWork(previewData);
 
       alert("Job Work Bill Saved Successfully");
 
@@ -61,26 +70,9 @@ const state =
     <div className="bg-gray-100 min-h-screen p-6">
         
       <JobWorkInvoicePreview
-        ref={printRef}
-        data={{
-          ...state.formData,
-
-          amount: state.amount,
-
-          cgst: state.cgst,
-
-          sgst: state.sgst,
-
-          igstAmount: state.igstAmount,
-
-          totalGST: state.totalGST,
-
-          grandTotal: state.grandTotal,
-
-          amountWords: amountToWords(state.grandTotal),
-        }}
-      />
-
+         ref={printRef}
+  data={previewData}
+/>
       <div className="flex justify-center gap-5 mt-8 print:hidden">
         <button
           onClick={() => navigate(-1)}

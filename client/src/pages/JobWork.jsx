@@ -9,31 +9,36 @@ function Billing() {
   const today = new Date().toISOString().split("T")[0];
 
   const [formData, setFormData] = useState({
-    invoiceNo: "01",
-    invoiceDate: today,
+        invoiceNo: "01",
+        invoiceDate: today,
 
-    customerName: "",
-    customerAddress: "",
-    customerGSTIN: "",
-    state: "",
-    stateCode: "",
+        reverseCharge: "No",
 
-    transportMode: "",
-    vehicleNumber: "",
-    dateOfSupply: today,
-    placeOfSupply: "",
+        customerName: "",
+        customerAddress: "",
+        customerGSTIN: "",
+        state: "",
+        stateCode: "",
 
-    consigneeName: "",
-    consigneeAddress: "",
-    consigneeGSTIN: "",
+        transportMode: "",
+        vehicleNumber: "",
+        dateOfSupply: today,
+        placeOfSupply: "",
 
-    rate: "",
-    cuFeet: "",
-    cgst: "",
-    sgst: "",
-    igst: "",
-  });
+        consigneeName: "",
+        consigneeAddress: "",
+        consigneeGSTIN: "",
+        consigneeState: "",
+        consigneeStateCode: "",
+        product: "",
+        hsnCode: "",
 
+        rate: "",
+        cuFeet: "",
+        cgst: "",
+        sgst: "",
+        igst: "",
+      });
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -45,16 +50,16 @@ function Billing() {
   Number(formData.rate || 0) *
   Number(formData.cuFeet || 0);
 
-const cgst =
+const cgstAmount =
   amount * Number(formData.cgst || 0) / 100;
 
-const sgst =
+const sgstAmount =
   amount * Number(formData.sgst || 0) / 100;
 
 const igstAmount =
   amount * Number(formData.igst || 0) / 100;
 
-const totalGST = cgst + sgst + igstAmount;
+const totalGST = cgstAmount + sgstAmount + igstAmount;
 
 const grandTotal = amount + totalGST;
 useEffect(() => {
@@ -103,6 +108,34 @@ useEffect(() => {
               className="w-full border rounded p-3 bg-gray-100"
             />
           </div>
+
+          <div>
+  <label className="block mb-2">Reverse Charge</label>
+
+  <label className="mr-4">
+    <input
+      type="radio"
+      name="reverseCharge"
+      value="Yes"
+      checked={formData.reverseCharge === "Yes"}
+      onChange={handleChange}
+    />{" "}
+    Yes
+  </label>
+
+  <label>
+    <input
+      type="radio"
+      name="reverseCharge"
+      value="No"
+      checked={formData.reverseCharge === "No"}
+      onChange={handleChange}
+    />{" "}
+    No
+  </label>
+</div>
+
+          
 
           <div>
             <label>Invoice Date</label>
@@ -236,13 +269,34 @@ useEffect(() => {
           className="w-full border rounded p-3 mb-3"
         />
 
-        <input
-          name="consigneeGSTIN"
-          placeholder="Consignee GSTIN"
-          value={formData.consigneeGSTIN}
-          onChange={handleChange}
-          className="w-full border rounded p-3"
-        />
+        <div className="grid md:grid-cols-3 gap-4">
+
+          <input
+            name="consigneeGSTIN"
+            placeholder="Consignee GSTIN"
+            value={formData.consigneeGSTIN}
+            onChange={handleChange}
+            className="border rounded p-3"
+          />
+
+          <input
+            name="consigneeState"
+            placeholder="State"
+            value={formData.consigneeState}
+            onChange={handleChange}
+            className="border rounded p-3"
+          />
+
+          <input
+            name="consigneeStateCode"
+            placeholder="State Code"
+            value={formData.consigneeStateCode}
+            onChange={handleChange}
+            className="border rounded p-3"
+          />
+
+        </div>
+
         <hr className="my-6" />
         {/* Product */}
 
@@ -253,15 +307,19 @@ useEffect(() => {
         <div className="grid md:grid-cols-3 gap-4">
 
           <input
-            value={company.product}
-            readOnly
-            className="border rounded p-3 bg-gray-100"
+            name="product"
+            placeholder="Product"
+            value={formData.product}
+            onChange={handleChange}
+            className="border rounded p-3"
           />
 
           <input
-            value={company.hsn}
-            readOnly
-            className="border rounded p-3 bg-gray-100"
+            name="hsnCode"
+            placeholder="HSN Code"
+            value={formData.hsnCode}
+            onChange={handleChange}
+            className="border rounded p-3"
           />
 
           <input
@@ -281,28 +339,28 @@ useEffect(() => {
           />
 
           <input
-  name="cgst"
-  placeholder="CGST %"
-  value={formData.cgst}
-  onChange={handleChange}
-  className="border rounded p-3"
-/>
+          name="cgst"
+          placeholder="CGST %"
+          value={formData.cgst}
+          onChange={handleChange}
+          className="border rounded p-3"
+        />
 
-<input
-  name="sgst"
-  placeholder="SGST %"
-  value={formData.sgst}
-  onChange={handleChange}
-  className="border rounded p-3"
-/>
+        <input
+          name="sgst"
+          placeholder="SGST %"
+          value={formData.sgst}
+          onChange={handleChange}
+          className="border rounded p-3"
+        />
 
-<input
-  name="igst"
-  placeholder="IGST %"
-  value={formData.igst}
-  onChange={handleChange}
-  className="border rounded p-3"
-/>
+        <input
+          name="igst"
+          placeholder="IGST %"
+          value={formData.igst}
+          onChange={handleChange}
+          className="border rounded p-3"
+        />
 
         </div>
 
@@ -313,11 +371,11 @@ useEffect(() => {
           <p>Amount : ₹ {amount.toFixed(2)}</p>
 
           <p>
-  CGST ({formData.cgst || 0}%): ₹ {cgst.toFixed(2)}
+  CGST ({formData.cgst || 0}%): ₹ {cgstAmount.toFixed(2)}
 </p>
 
 <p>
-  SGST ({formData.sgst || 0}%): ₹ {sgst.toFixed(2)}
+  SGST ({formData.sgst || 0}%): ₹ {sgstAmount.toFixed(2)}
 </p>
 
 <p>
@@ -340,8 +398,8 @@ useEffect(() => {
   const invoiceData = {
     formData,
     amount,
-    cgst,
-    sgst,
+    cgstAmount,
+    sgstAmount,
     igstAmount,
     totalGST,
     grandTotal,
@@ -356,8 +414,8 @@ useEffect(() => {
   state: {
     formData,
     amount,
-    cgst,
-    sgst,
+    cgstAmount,
+    sgstAmount,
     igstAmount,
     totalGST,
     grandTotal,
@@ -367,11 +425,11 @@ useEffect(() => {
           className="bg-blue-600 text-white px-8 py-3 rounded-lg"
         >
           Print  Bill
-        </button>
+        </button><br/><br/>
         <button onClick={() => navigate("/search-jobwork")}
         className="bg-gray-700 text-white px-8 py-3 rounded-lg ml-3">
          Search Jobwork Bill
-        </button>
+        </button><br/><br/>
         <button onClick={() => navigate("/dashboard")}
         className="bg-red-700 text-white px-8 py-3 rounded-lg ml-3">
          Dashboard
