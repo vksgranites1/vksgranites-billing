@@ -12,13 +12,16 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
   return (
     <div
       ref={ref}
-      className="bg-white border border-black p-6 text-sm mx-auto"
+      className=""
+      className="a4-print"
       style={{
         WebkitPrintColorAdjust: "exact",
         printColorAdjust: "exact",
         boxSizing: "border-box",
         width: "210mm",
         minHeight: "297mm",
+        margin: 0,
+        padding: 0,
       }}
     >
       {/* Header */}
@@ -30,17 +33,17 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
     
 
-<div className="border-2 border-blue-900">
+<div className="border-3 border-blue-900 py-0">
 
   {/* Top Strip */}
 
-  <div className="flex justify-between px-5 py-1 text-sm font-semibold">
+  <div className="relative flex items-center justify-between px-5 py-0 text-sm font-semibold">
 
     <div>
       GSTIN No. {company.gstin}
     </div>
 
-    <div className="font-bold text-blue-900 text-xl">
+    <div className="absolute left-1/2 -translate-x-1/2 font-bold text-blue-900 text-xl">
       TAX INVOICE
     </div>
 
@@ -60,27 +63,27 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
       <img
         src={company.logo}
         alt="logo"
-        className="w-45 "
+        className="w-30 h-30"
       />
 
     </div>
 
-    <div className="flex-1 text-center">
+    <div className="flex-1">
 
-      <h1 className="text-5xl font-bold text-blue-900 tracking-wide"style={{ fontFamily: "Times New Roman, Times, serif" }}>
+      <h1 className="text-5xl font-bold text-blue-900 tracking-wide ml-1 text-left ml-16"style={{ fontFamily: "Times New Roman, Times, serif" }} >
 
         V.K.S GRANITES
 
       </h1>
 
-      <p className="font-semibold mt-2">
+      <p className="font-semibold mt-2 ml-32">
 
         3/6, Moolakadu,
         Masakalipatti (PO)
 
       </p>
 
-      <p className="font-semibold">
+      <p className="font-semibold ml-34">
 
         Rasipuram,
         Tamil Nadu  - 637401
@@ -97,13 +100,13 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ================= RECEIVER & CONSIGNEE ================= */}
 
-<div className="grid grid-cols-2 border-l-2 border-r-2 border-b-2 border-blue-900">
+<div className="grid grid-cols-2 border-l-3 border-r-3 border-b-2 border-blue-900">
 
   {/* Receiver */}
 
   <div className="border-r-2 border-blue-900">
 
-    <div className="bg-blue-900 text-white text-center font-bold py-1">
+    <div className="bg-blue-900 text-white text-center font-bold py-0">
       Details of Receiver Billed To
     </div>
 
@@ -112,26 +115,26 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
       <tbody>
 
         <tr className="border-b">
-          <td className="p-2 font-semibold w-40">
+          <td className="p-2 font-semibold w-40 py-1">
             Reverse Charge (Y/N)
           </td>
-          <td className="p-2">{data.reverseCharge}</td>
+          <td className="p-0 py-1 ">{data.reverseCharge}</td>
         </tr>
 
         <tr className="border-b">
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             Invoice No :
           </td>
-          <td className="p-2">
+          <td className="p-0 py-1">
             {data.invoiceNo}
           </td>
         </tr>
 
         <tr className="border-b">
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             Invoice Date :
           </td>
-          <td className="p-2">
+          <td className="p-0 py-1">
             {formatDate(data.invoiceDate)}
           </td>
         </tr>
@@ -139,11 +142,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
         
 
         <tr className="border-b">
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             Name  :
           </td>
 
-          <td className="p-2">
+          <td className="p-0 py-1">
             {data.customerName || "-"}
           </td>
 
@@ -151,11 +154,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
         <tr className="border-b align-top">
 
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             Address   :
           </td>
 
-          <td className="p-2 whitespace-pre-line">
+          <td className="p-0 py-1 whitespace-pre-line">
             {data.customerAddress || "-"}
           </td>
 
@@ -163,32 +166,32 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
         <tr className="border-b">
 
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             GSTIN   :
           </td>
 
-          <td className="p-2">
+          <td className="p-0 py-1">
             {data.customerGSTIN || "-"}
           </td>
 
         </tr>
 
         <tr className="border-b">
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             State :
           </td>
 
-          <td className="p-2">
+          <td className="p-0 py-1">
             {data.state || "-"}
           </td>
         </tr>
 
         <tr className="border-b">
-          <td className="p-2 font-semibold">
+          <td className="p-2 font-semibold py-1">
             State Code :
           </td>
 
-          <td className="p-2">
+          <td className="p-0 py-1">
             {data.stateCode || "-"}
           </td>
         </tr>
@@ -203,7 +206,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
   <div>
 
-  <div className="bg-blue-900 text-white text-center font-bold py-1">
+  <div className="bg-blue-900 text-white text-center font-bold py-0">
     Details of Consignee Shipped To
   </div>
 
@@ -213,11 +216,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold w-40">
+        <td className="p-2 font-semibold w-40 py-1">
           Transport Mode :
         </td>
 
-        <td className="p-2">
+        <td className="p-0 py-1">
           {data.transportMode}
         </td>
 
@@ -225,11 +228,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           Vehicle Number :
         </td>
 
-        <td className="p-2">
+        <td className="p-0 py-1">
           {data.vehicleNumber}
         </td>
 
@@ -237,11 +240,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           Date of Supply :
         </td>
 
-        <td className="p-2">
+        <td className="p-0 py-1">
           {formatDate(data.dateOfSupply)}
         </td>
 
@@ -249,11 +252,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           Place of Supply :
         </td>
 
-        <td className="p-2">
+        <td className="p-0 py-1">
           {data.placeOfSupply || "-"}
         </td>
 
@@ -261,11 +264,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           Name :
         </td>
 
-        <td className="p-2">
+        <td className="p-0 py-1">
           {data.consigneeName || "-"}
         </td>
 
@@ -273,11 +276,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           Address :
         </td>
 
-        <td className="p-2 whitespace-pre-line">
+        <td className="p-0 py-1 whitespace-pre-line">
           {data.consigneeAddress || "-"}
         </td>
 
@@ -285,11 +288,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="border-b">
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           GSTIN :
         </td>
 
-        <td className="p-2">
+        <td className="p-0 py-1">
           {data.consigneeGSTIN || "-"}
         </td>
 
@@ -297,14 +300,14 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr>
 
-        <td className="p-2 font-semibold">
+        <td className="p-2 font-semibold py-1">
           State :
         </td>
 
-        <td className="p-2 flex justify-between">
+        <td className="p-0 py-1 flex justify-between">
           {data.consigneeState || "-"}
-          <span className="float-right">
-            <span className="font-bold">Code :</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{data.consigneeStateCode || "-"}
+          <span className="float-right mr-10">
+            <span className="font-bold p-1">Code :</span> &nbsp;&nbsp;&nbsp;{data.consigneeStateCode  || "- "}
           </span>
         </td>
 
@@ -321,7 +324,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ================= PRODUCT DETAILS ================= */}
 
-<div className="border-l-2 border-r-2 border-b-2 border-blue-900">
+<div className="border-l-2 border-r-2 border-b-2 border-blue-900 ">
 
   <table className="w-full border-collapse text-sm">
 
@@ -329,28 +332,28 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       <tr className="bg-blue-900 text-white">
 
-        <th className="border border-blue-900 p-2 w-12">
+        <th className="border border-blue-900 p-1 w-12">
           Sl.No
         </th>
 
-        <th className="border border-blue-900 p-2">
+        <th className="border border-blue-900 p-1">
           Name of Product / Service
         </th>
 
-        <th className="border border-blue-900 p-2 w-20">
+        <th className="border border-blue-900 p-1 w-20">
           HSN
            Code
         </th>
 
-        <th className="border border-blue-900 p-2 w-20">
+        <th className="border border-blue-900 p-1 w-20">
           Rate / Sq.ft
         </th>
 
-        <th className="border border-blue-900 p-2 w-20">
+        <th className="border border-blue-900 p-1 w-20">
           Cu.ft
         </th>
 
-        <th className="border border-blue-900 p-2 w-36">
+        <th className="border border-blue-900 p-1 w-36">
           Amount (₹)
         </th>
 
@@ -402,7 +405,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ===================== TOTALS ===================== */}
 
-<div className="grid grid-cols-2 border-l-2 border-r-2 border-b-2 border-blue-900">
+<div className="grid grid-cols-2 border-l-3 border-r-2 border-b-3 border-blue-900">
 
  {/* Amount in Words & Bank Details */}
 
@@ -424,7 +427,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
   {/* Bank Details */}
 
-  <div className="border-b border-blue px-2 py-1 min-h-[120px]">
+  <div className="border-b border-blue px-2 py-0 min-h-[120px]">
 
     <h2 className="text-lg font-bold underline mb-1">
       Bank Details
@@ -496,57 +499,57 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
         <div>
 
-  <table className="w-full border border-blue-900 ">
+  <table className="w-full border-l-1 border-r-2 border-blue-900 ">
 
     <tbody>
 
       <tr>
-        <td className="border px-2 py-1">
+        <td className="border px-2 py-0.5">
           Total Amount Before Tax
         </td>
 
-        <td className="border px-2 py-1 text-right">
+        <td className="border px-2 py-0.5 text-right">
           ₹ {Number(data.amount).toFixed(2)}
         </td>
       </tr>
 
       <tr>
-        <td className="border px-2 py-1">
+        <td className="border px-2 py-0.5">
           CGST @ {data.cgst}%
         </td>
 
-        <td className="border px-2 py-1 text-right">
+        <td className="border px-2 py-0.5 text-right">
           ₹ {Number(data.cgstAmount).toFixed(2)}
         </td>
       </tr>
 
       <tr>
-        <td className="border px-2 py-1">
+        <td className="border px-2 py-0.5">
           SGST @ {data.sgst}%
         </td>
 
-        <td className="border px-2 py-1 text-right">
+        <td className="border px-2 py-0.5 text-right">
           ₹ {Number(data.sgstAmount).toFixed(2)}
         </td>
       </tr>
 
       <tr>
-        <td className="border px-2 py-1">
+        <td className="border px-2 py-0.5">
           IGST @ {data.igst}%
         </td>
 
-        <td className="border px-2 py-1 text-right">
+        <td className="border px-2 py-0.5 text-right">
           ₹ {Number(data.igstAmount).toFixed(2)}
         </td>
       </tr>
 
       <tr>
 
-        <td className="border px-4 py-2 font-bold">
+        <td className="border px-4 py-0.5 font-bold">
         Total GST
         </td>
 
-        <td className="border px-4 py-2 text-right font-bold">
+        <td className="border px-4 py-0.5 text-right font-bold">
         ₹ {Number(data.totalGST).toFixed(2)}
         </td>
 
@@ -568,7 +571,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
   </table>
 
-  <div className="mt-2 text-center text-xs leading-4">
+  <div className="mt-0 text-center text-xs leading-4 border-r-2 border-blue-900">
 
     <p>
       Certified that the particulars given above are true and correct.
@@ -585,7 +588,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
       <div className="mt-4">
         <div className="flex justify-center">
           <div className="text-right" style={{ width: "40%" }}>
-            <div className="border-t border-black mx-auto" style={{ height: 60, width: "0%" }} />
+            <div className="border-t border-blue-900 mx-auto" style={{ height: 60, width: "0%" }} />
             <p className="font-semibold mt-1">Authorised Signatory</p>
           </div>
         </div>

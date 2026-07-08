@@ -80,6 +80,12 @@ export const getInvoices = async (req, res) => {
             },
           },
           {
+            "products.product": {
+              $regex: search,
+              $options: "i",
+            },
+          },
+          {
             invoiceDate: {
               $regex: search,
               $options: "i",

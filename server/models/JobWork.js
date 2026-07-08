@@ -24,13 +24,11 @@ const jobWorkSchema = new mongoose.Schema(
 
     dateOfSupply: String,
     placeOfSupply: String,
-
     consigneeName: String,
     consigneeAddress: String,
     consigneeGSTIN: String,
     consigneeState: String,
     consigneeStateCode: String,
-
     product: String,
     hsnCode: String,
 
@@ -38,6 +36,20 @@ const jobWorkSchema = new mongoose.Schema(
     cuFeet: Number,
 
     amount: Number,
+
+    // Multi-product support
+    products: [
+      {
+        product: String,
+        hsn: String,
+        rate: Number,
+        cuFeet: Number,
+        cgst: Number,
+        sgst: Number,
+        igst: Number,
+        amount: Number,
+      },
+    ],
     cgst: Number,
     sgst: Number,
     igst: Number,

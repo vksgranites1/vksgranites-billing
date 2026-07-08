@@ -26,6 +26,7 @@ const invoiceSchema = new mongoose.Schema(
     dateOfSupply: String,
     placeOfSupply: String,
 
+    // Backwards-compatible single-product fields (optional)
     product: String,
     hsnCode: String,
 
@@ -33,6 +34,20 @@ const invoiceSchema = new mongoose.Schema(
     cuFeet: Number,
 
     amount: Number,
+
+    // Multi-product support
+    products: [
+      {
+        product: String,
+        hsn: String,
+        rate: Number,
+        cuFeet: Number,
+        cgst: Number,
+        sgst: Number,
+        igst: Number,
+        amount: Number,
+      },
+    ],
 
     cgst: Number,
     sgst: Number,

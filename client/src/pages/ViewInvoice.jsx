@@ -48,7 +48,7 @@ function ViewInvoice() {
         </button>
 &nbsp;&nbsp;
         <button
-          onClick={() => navigate("/search-jobwork")}
+          onClick={() => navigate("/search")}
           className="bg-red-600 text-white px-7 py-3 rounded"
         >
           Back to Search
