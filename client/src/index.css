@@ -1,43 +1,48 @@
 @import "tailwindcss";
+
+@page {
+  size: A4 portrait;
+  margin: 5mm;
+}
+
 @media print {
   html,
   body {
     width: 100%;
-    min-height: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
-    background: white;
+    background: #fff;
     box-sizing: border-box;
+  }
+
+  body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
   }
 
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
-
   .a4-print {
     width: 210mm;
-    max-width: 210mm;
-    min-height: 297mm;
-    max-height: 297mm;
-    margin: 0;
+    height: 280mm;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
+
+    /* Outer Border */
+    border: 3px solid #1e3a8a;
+
+    overflow: hidden;
     page-break-inside: avoid;
     break-inside: avoid;
+    background: white;
   }
 
   .a4-print * {
     box-sizing: border-box;
   }
 
-  .print\:hidden {
-    display: none !important;
-  }
-
+  .print\:hidden,
   button {
     display: none !important;
   }

@@ -1,4 +1,5 @@
 import JobWork from "../models/JobWork.js";
+import { resolveInvoiceNumber } from "../utils/invoiceNumber.js";
 
 // Get Next Job Work Number
 export const getNextInvoiceNumber = async (req, res) => {
@@ -32,7 +33,16 @@ export const getNextInvoiceNumber = async (req, res) => {
 // Save Job Work Bill
 export const saveInvoice = async (req, res) => {
   try {
-    const jobWork = new JobWork(req.body);
+    const existingJobWorks = await JobWork.find({}, "invoiceNo");
+    const invoiceNo = resolveInvoiceNumber(
+      req.body.invoiceNo,
+      existingJobWorks.map((jobWork) => jobWork.invoiceNo)
+    );
+
+    const jobWork = new JobWork({
+      ...req.body,
+      invoiceNo,
+    });
 
     await jobWork.save();
 
@@ -45,10 +55,35 @@ export const saveInvoice = async (req, res) => {
     console.error(error);
 
     if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: "Job Work Number already exists",
-      });
+      try {
+        const existingJobWorks = await JobWork.find({}, "invoiceNo");
+        const invoiceNo = resolveInvoiceNumber(
+          req.body.invoiceNo,
+          existingJobWorks.map((jobWork) => jobWork.invoiceNo)
+        );
+
+        const retryJobWork = new JobWork({
+          ...req.body,
+          invoiceNo,
+        });
+
+        await retryJobWork.save();
+
+        return res.status(201).json({
+          success: true,
+          message: "Job Work Bill Saved Successfully",
+          invoice: retryJobWork,
+        });
+      } catch (retryError) {
+        console.error(retryError);
+
+        if (retryError.code === 11000) {
+          return res.status(400).json({
+            success: false,
+            message: "Job Work Number already exists",
+          });
+        }
+      }
     }
 
     res.status(500).json({

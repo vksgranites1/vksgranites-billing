@@ -1,6 +1,5 @@
 import { forwardRef } from "react";
 import company from "../data/company";
-import signature from "../assets/signature.png";
 const formatDate = (date) => {
   if (!date) return "";
 
@@ -12,22 +11,17 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
   return (
     <div
       ref={ref}
-      className="a4-print"
+      className="a4-print mx-auto bg-white"
       style={{
         WebkitPrintColorAdjust: "exact",
         printColorAdjust: "exact",
-        boxSizing: "border-box",
-        width: "210mm",
-        minHeight: "297mm",
-        margin: 0,
-        padding: 0,
       }}
     >
       {/* Header */}
       {/* ================= HEADER ================= */}
       
 
-<div className="border-3 border-blue-900">
+<div className="border-b-2 border-blue-900">
 
   {/* Top Strip */}
 
@@ -92,11 +86,11 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ================= RECEIVER & CONSIGNEE ================= */}
 
-<div className="grid grid-cols-2 border-l-3 border-r-3 border-b-2 border-blue-900">
+<div className="grid grid-cols-2 border-b border-blue-900">
 
   {/* Receiver */}
 
-  <div className="border-r-2 border-blue-900">
+  <div className="border-r border-blue-900">
 
     <div className="bg-blue-900 text-white text-center font-bold py-0">
       Details of Receiver Billed To
@@ -321,7 +315,7 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ================= PRODUCT DETAILS ================= */}
 
-<div className="border-l-3 border-r-3 border-b-1 border-blue-900">
+<div className="border-b border-blue-900">
 
   <table className="w-full border-collapse text-sm">
 
@@ -401,12 +395,11 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
       {/* GST */}
 
       {/* ===================== TOTALS ===================== */}
-
-<div className="grid grid-cols-2 border-l-3 border-r-1 border-b-3 border-blue-900">
+<div className="grid grid-cols-2 items-stretch border-b border-blue-900 min-h-[260px]">
 
  {/* Amount in Words & Bank Details */}
 
-<div className="border-r border-blue-900 ">
+<div className="border-r border-blue-900 h-full">
 
   {/* Amount in Words */}
 
@@ -424,7 +417,7 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 
   {/* Bank Details */}
 
-  <div className="border-b border-blue px-2 py-1 min-h-[120px]">
+  <div className="border-b border-blue-900 px-2 py-1 min-h-[120px]">
 
     <h2 className="text-lg font-bold underline mb-1">
       Bank Details
@@ -474,7 +467,7 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 
   {/* Terms */}
 
-  <div className="px-2 py-1 text-xs leading-4 ">
+  <div className="px-2 py-1 text-xs leading-4 min-h-[290px]">
 
 
     <p className="font-bold underline">
@@ -494,9 +487,9 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 </div>
   {/* Totals */}
 
-        <div>
+        <div >
 
-  <table className="w-full border-l-1 border-r-3 border-blue-900 ">
+  <table className="w-full border-blue-900">
 
     <tbody>
 
@@ -568,7 +561,7 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 
   </table>
 
-  <div className="mt-0 text-center text-xs leading-4 border-r-3 border-blue-900">
+  <div className="mt-0 text-center text-xs leading-4 border-blue-900">
 
     <p>
       Certified that the particulars given above are true and correct.
@@ -578,12 +571,12 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
 
       <p>
         For
-        <span className="font-bold text-xl text-blue-900 ml-2"style={{ fontFamily: "Times New Roman, Times, serif" }}>
+        <span className="font-bold text-xl text-blue-900 ml-2" style={{ fontFamily: "Times New Roman, Times, serif" }}>
           VKS GRANITES
         </span>
       </p>
       <div className="mt-4">
-        <div className="flex justify-center ">
+        <div className="flex justify-center">
           <div className="text-right" style={{ width: "40%" }}>
             <div className="border-t border-blue-900 mx-auto" style={{ height: 60, width: "0%" }} />
             <p className="font-semibold mt-1">Authorised Signatory</p>
@@ -594,12 +587,6 @@ const JobWorkInvoicePreview = forwardRef(({ data }, ref) => {
     </div>
 
   </div>
-
-
-    
-
-    
-
 
     </div>
 

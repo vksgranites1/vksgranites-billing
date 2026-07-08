@@ -62,7 +62,12 @@ const state =
       navigate("/jobwork");
     } catch (error) {
       console.error(error);
-      alert("Unable to save Job Work Bill");
+      const message =
+        error.response?.data?.message ||
+        (error.code === "ERR_NETWORK"
+          ? "Cannot reach server. Make sure the backend is running and MongoDB is connected."
+          : "Unable to save Job Work Bill");
+      alert(message);
     }
   };
  

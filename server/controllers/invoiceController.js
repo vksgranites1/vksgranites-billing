@@ -1,4 +1,5 @@
 import Invoice from "../models/Invoice.js";
+import { resolveInvoiceNumber } from "../utils/invoiceNumber.js";
 
 // Get Next Invoice Number
 export const getNextInvoiceNumber = async (req, res) => {
@@ -31,7 +32,16 @@ export const getNextInvoiceNumber = async (req, res) => {
 // Save Invoice
 export const saveInvoice = async (req, res) => {
   try {
-    const invoice = new Invoice(req.body);
+    const existingInvoices = await Invoice.find({}, "invoiceNo");
+    const invoiceNo = resolveInvoiceNumber(
+      req.body.invoiceNo,
+      existingInvoices.map((invoice) => invoice.invoiceNo)
+    );
+
+    const invoice = new Invoice({
+      ...req.body,
+      invoiceNo,
+    });
 
     await invoice.save();
 
@@ -44,10 +54,35 @@ export const saveInvoice = async (req, res) => {
     console.error(error);
 
     if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: "Invoice number already exists",
-      });
+      try {
+        const existingInvoices = await Invoice.find({}, "invoiceNo");
+        const invoiceNo = resolveInvoiceNumber(
+          req.body.invoiceNo,
+          existingInvoices.map((invoice) => invoice.invoiceNo)
+        );
+
+        const retryInvoice = new Invoice({
+          ...req.body,
+          invoiceNo,
+        });
+
+        await retryInvoice.save();
+
+        return res.status(201).json({
+          success: true,
+          message: "Invoice Saved Successfully",
+          invoice: retryInvoice,
+        });
+      } catch (retryError) {
+        console.error(retryError);
+
+        if (retryError.code === 11000) {
+          return res.status(400).json({
+            success: false,
+            message: "Invoice number already exists",
+          });
+        }
+      }
     }
 
     res.status(500).json({

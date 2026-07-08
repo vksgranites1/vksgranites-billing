@@ -12,16 +12,10 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
   return (
     <div
       ref={ref}
-      className=""
-      className="a4-print"
+      className="a4-print mx-auto bg-white"
       style={{
         WebkitPrintColorAdjust: "exact",
         printColorAdjust: "exact",
-        boxSizing: "border-box",
-        width: "210mm",
-        minHeight: "297mm",
-        margin: 0,
-        padding: 0,
       }}
     >
       {/* Header */}
@@ -33,7 +27,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
     
 
-<div className="border-3 border-blue-900 py-0">
+<div className="border-b-2 border-blue-900">
 
   {/* Top Strip */}
 
@@ -100,11 +94,11 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ================= RECEIVER & CONSIGNEE ================= */}
 
-<div className="grid grid-cols-2 border-l-3 border-r-3 border-b-2 border-blue-900">
+<div className="grid grid-cols-2 border-b border-blue-900">
 
   {/* Receiver */}
 
-  <div className="border-r-2 border-blue-900">
+  <div className="border-r border-blue-900">
 
     <div className="bg-blue-900 text-white text-center font-bold py-0">
       Details of Receiver Billed To
@@ -324,7 +318,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ================= PRODUCT DETAILS ================= */}
 
-<div className="border-l-2 border-r-2 border-b-2 border-blue-900 ">
+<div className="border-b border-blue-900">
 
   <table className="w-full border-collapse text-sm">
 
@@ -405,7 +399,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
       {/* ===================== TOTALS ===================== */}
 
-<div className="grid grid-cols-2 border-l-3 border-r-2 border-b-3 border-blue-900">
+<div className="grid grid-cols-2">
 
  {/* Amount in Words & Bank Details */}
 
@@ -477,7 +471,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
   {/* Terms */}
 
-  <div className="px-2 py-1 text-xs leading-4">
+  <div className="px-2 py-1 text-xs leading-4 min-h-[290px]">
 
 
     <p className="font-bold underline">
@@ -499,7 +493,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
         <div>
 
-  <table className="w-full border-l-1 border-r-2 border-blue-900 ">
+  <table className="w-full border-blue-900 ">
 
     <tbody>
 
@@ -571,7 +565,7 @@ const InvoicePreview = forwardRef(({ data }, ref) => {
 
   </table>
 
-  <div className="mt-0 text-center text-xs leading-4 border-r-2 border-blue-900">
+  <div className="mt-0 text-center text-xs leading-4  border-blue-900">
 
     <p>
       Certified that the particulars given above are true and correct.

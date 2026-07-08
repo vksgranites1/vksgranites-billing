@@ -10,7 +10,7 @@ const createUser = async () => {
     await mongoose.connect(process.env.MONGO_URI);
 
     const existingUser = await User.findOne({
-      email: "vtsgranites@gmail.com",
+      email: { $regex: "^vksgranites@gmail.com$", $options: "i" },
     });
 
     if (existingUser) {
